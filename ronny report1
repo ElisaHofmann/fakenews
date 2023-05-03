@@ -1,4 +1,5 @@
 
+import sqlite3
 
 conn = sqlite3.connect(r"D:\Projekt_FakeNews_Detection\dataverse_files\nelagt2022.db")
 cursor = conn.cursor()
