@@ -1,0 +1,4 @@
+
+
+engine = sql.create_engine("sqlite:///D:\\Projekt_FakeNews_Detection\\dataverse_files\\nelagt2022.db")
+df = pd.read_sql_table("newsdata", engine)
