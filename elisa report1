@@ -2,6 +2,15 @@
 ##############################################################################################
 
 
+Link to datasets:
+https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/AMCV2H
+
+Link to source for labels:
+https://mediabiasfactcheck.com/
+
+##############################################################################################
+
+
 
 # 1 Import libraries
 ##############################################################################################
@@ -26,7 +35,7 @@ import nltk
 
 
 
-# 2 NELA DATABASE db
+# 2 NELA DATABASE db - Dataset Analysis: "nela-gt-2022-db"
 ##############################################################################################
 ## Read sqlite query results into a pandas DataFrame
 con = sqlite3.connect("nela-gt-2022_db/nela-gt-2022.db")
@@ -57,10 +66,10 @@ fig = plt.figure(figsize = (10,40))
 sns.countplot(y = dbs.source, order = dbs["source"].value_counts().index)
 plt.xlabel("Frequency")
 plt.ylabel("Sources")
-plt.title("Number of articles per news source contained in the dataset in the year 2022")
+plt.title("Number of articles per news source contained in the dataset")
 plt.show();
 
-#### idea: create bins (1.g. sources with 100 articles, 100-200 etc. and then plot)
+#### idea for improvement: create bins (1.g. sources with 100 articles, 100-200 etc. and then plot)
 
 
 #########################################################
@@ -107,7 +116,7 @@ plt.gca().set_xticklabels(month_names)
 
 plt.show();
 
-# ToDo: get two lowest values
+# ToDo: figure out what the two low dots are
 
 
 ## C) plot the number of articles per weekday
@@ -124,7 +133,7 @@ plt.show();
 
 
 
-# 3 NELA "labels.tab" document 
+# 3 NELA "labels.tab" document - Dataset Analysis: "label.tab"
 ##############################################################################################
 
 # labels = pd.read_csv("labels.csv", index_col=0)
@@ -147,7 +156,7 @@ plt.show();
 
 
 
-# 4 NELA "labels_all.tab" document 
+# 4 NELA "labels_all.tab" document - Dataset Analysis: "labels_all.tab"
 ##############################################################################################
 
 # labels = pd.read_csv("labels.csv", index_col=0)
@@ -167,6 +176,8 @@ plt.title("Frequencies of the four outlet-level veracity labels ('labels_all' do
 plt.show();
 
 
+
+#########################################################
 ## plot countries
 sns.countplot(y = "country", data = labels_all, order = labels_all["country"].value_counts().index);
 plt.ylabel("Country")
@@ -179,7 +190,6 @@ plt.show();
 
 #########################################################
 ## plot factuality values
-
 
 # create new variable factuality as integer
 labels_all["fact_num"] = labels_all["factuality"].astype("int")
