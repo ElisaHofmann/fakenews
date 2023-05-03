@@ -1,0 +1,25 @@
+# 1 Import libraries
+import numpy as np
+import pandas as pd
+from matplotlib.pylab import plt
+import seaborn as sns
+# from sqlalchemy import create_engine
+# import sqlalchemy as 
+import sqlite3
+
+from sklearn import metrics
+from sklearn.metrics import confusion_matrix , classification_report
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.model_selection import train_test_split
+# from wordcloud import WordCloud
+import re
+from nltk.corpus import stopwords
+from nltk.stem.porter import PorterStemmer
+import nltk
+
+
+
+# 2 NELA DATABASE db
+
+
