@@ -16,6 +16,7 @@
 # Elisa's code for reading the database
 
 # import library
+import pandas as pd
 import sqlite3
 
 # Read sqlite query results into a pandas DataFrame
