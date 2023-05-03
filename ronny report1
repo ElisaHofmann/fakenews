@@ -1,3 +1,14 @@
+
+
+conn = sqlite3.connect(r"D:\Projekt_FakeNews_Detection\dataverse_files\nelagt2022.db")
+cursor = conn.cursor()
+sql_query = """SELECT name FROM sqlite_master
+    WHERE type='table';"""
+cursor.execute(sql_query)
+print(cursor.fetchall())
+
+
+
 import pandas as pd
 import sqlalchemy as sql
 
