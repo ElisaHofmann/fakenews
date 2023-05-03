@@ -1,5 +1,18 @@
 # collect code snippets for report 1
 
+
+##############################################
+
+# Link to datasets:
+# https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/AMCV2H
+
+# Link to source for labels:
+# https://mediabiasfactcheck.com/
+
+
+
+#############################################
+
 # Elisa's code for reading the database
 # Read sqlite query results into a pandas DataFrame
 con = sqlite3.connect("nela-gt-2022_db/nela-gt-2022.db")
