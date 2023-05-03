@@ -1,4 +1,10 @@
+# ELISA'S CODE FOR REPORT 1
+##############################################################################################
+
+
+
 # 1 Import libraries
+##############################################################################################
 import numpy as np
 import pandas as pd
 from matplotlib.pylab import plt
@@ -21,5 +27,174 @@ import nltk
 
 
 # 2 NELA DATABASE db
+##############################################################################################
+## Read sqlite query results into a pandas DataFrame
+con = sqlite3.connect("nela-gt-2022_db/nela-gt-2022.db")
+db = pd.read_sql_query("SELECT * from newsdata", con)
+
+## first inspection of db
+print(db.head())
+print(db.info())
+print(db.describe())
+
+## check for missing values
+db.isnull().sum(axis = 0)
 
 
+#########################################################
+## get publishers / sources
+db["source"].unique()
+
+## get publishers / sources sorted alphabetically
+a = db["source"].unique()
+print(sorted(a))
+
+## check whether we have duplicates
+print(db.duplicated().sum())
+
+## plot publishers / sources
+fig = plt.figure(figsize = (10,40))
+sns.countplot(y = dbs.source, order = dbs["source"].value_counts().index)
+plt.xlabel("Frequency")
+plt.ylabel("Sources")
+plt.title("Number of articles per news source contained in the dataset in the year 2022")
+plt.show();
+
+#### idea: create bins (1.g. sources with 100 articles, 100-200 etc. and then plot)
+
+
+#########################################################
+## Analysis of time data
+# create new variables
+db["year"] = pd.to_datetime(db["date"]).dt.year
+db["month"] = pd.to_datetime(db["date"]).dt.month
+db["day"] = pd.to_datetime(db["date"]).dt.dayofyear
+db["weekday"] = pd.to_datetime(db["date"]).dt.weekday
+db["time"] = pd.to_datetime(db["date"]).dt.time
+
+db.info()
+db.head(5)
+
+## A) plot the number of articles per month
+# get values
+# db["month"].value_counts()
+
+plt.figure(figsize=(15,5))
+sns.countplot(x=db.month, color="limegreen");
+plt.xticks(np.arange(12),["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]);
+plt.ylabel("Number of articles")
+plt.xlabel("Months")
+plt.title("Number of articles per month in dataset");
+
+
+## B) plot the number of articles per day
+# lineplot articles per day whole year
+db["date"].value_counts()
+
+# sort the values and create a new variable
+lineplot_data = db["date"].value_counts().sort_index()
+
+fig = plt.figure(figsize = (10, 8))
+ax1 = fig.add_subplot(111)
+ax1.plot_date(lineplot_data.index, lineplot_data, linestyle='-')
+
+## nicer x-axis
+month_starts = [0,31,60,91,121,152,182,213,244,274,305,335]
+month_names = ['Jan','Feb','Mar','Apr','May','Jun',
+               'Jul','Aug','Sep','Oct','Nov','Dec'] 
+plt.gca().set_xticks(month_starts)
+plt.gca().set_xticklabels(month_names)
+
+plt.show();
+
+# ToDo: get two lowest values
+
+
+## C) plot the number of articles per weekday
+# get values
+# db["weekday"].value_counts()
+
+fig = plt.figure(figsize = (9, 6))
+sns.countplot (x = db["weekday"], color = "lightblue")               
+plt.xticks(np.arange(7),["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"])
+plt.ylabel("Frequency")
+plt.xlabel("Weekdays")
+plt.show();
+
+
+
+
+# 3 NELA "labels.tab" document 
+##############################################################################################
+
+# labels = pd.read_csv("labels.csv", index_col=0)
+labels = pd.read_csv("labels.csv")
+
+labels.head(10)
+labels.info()
+
+
+#########################################################
+## plot labels
+sns.countplot(x = "label", data = labels)
+plt.xticks(np.arange(3),["0: Reliable", "1: Mixed", "2: Unreliable"])
+plt.ylabel("Frequency")
+plt.xlabel("Outlet-level veracity labels")
+plt.title("Frequencies of the three outlet-level veracity labels ('labels' document)'")
+plt.show();
+
+
+
+
+
+# 4 NELA "labels_all.tab" document 
+##############################################################################################
+
+# labels = pd.read_csv("labels.csv", index_col=0)
+labels_all = pd.read_csv("labels_all.csv")
+
+labels_all.head(10)
+labels_all.info(10)
+
+
+#########################################################
+## plot labels
+sns.countplot(x = "label", data = labels_all)
+plt.xticks(np.arange(4),["-1: Unlabeled", "0: Reliable", "1: Mixed", "2: Unreliable"])
+plt.ylabel("Frequency")
+plt.xlabel("Outlet-level veracity labels")
+plt.title("Frequencies of the four outlet-level veracity labels ('labels_all' document)'")
+plt.show();
+
+
+## plot countries
+sns.countplot(y = "country", data = labels_all, order = labels_all["country"].value_counts().index);
+plt.ylabel("Country")
+plt.xlabel("Frequency")
+plt.title("Frequencies of countries ('labels_all' document)")
+plt.show();
+
+
+
+
+#########################################################
+## plot factuality values
+
+
+# create new variable factuality as integer
+labels_all["fact_num"] = labels_all["factuality"].astype("int")
+
+# count sorted
+labels_all.fact_num.value_counts.sort_values()
+
+# plot
+fig = plt.figure(figsize=(10,5))
+sns.countplot(x = "factuality", data = labels_all) 
+plt.xticks(np.arange(6),["0: Very Low", "1: Low", "2: Mixed", "3: Mostly Factual", "4: High", "5: Very High"])
+plt.ylabel("Frequency")
+plt.xlabel("Outlet-level factuality labels")
+plt.title("Frequencies of six outlet-level factuality labels ('labels_all' document)")
+plt.show();
+
+## alternative plot
+sns.displot (labels_all["factuality"], kde=True, bins=6);
