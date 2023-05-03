@@ -63,7 +63,7 @@ print(db.duplicated().sum())
 
 ## plot publishers / sources
 fig = plt.figure(figsize = (10,40))
-sns.countplot(y = dbs.source, order = dbs["source"].value_counts().index)
+sns.countplot(y = db.source, order = db["source"].value_counts().index)
 plt.xlabel("Frequency")
 plt.ylabel("Sources")
 plt.title("Number of articles per news source contained in the dataset")
