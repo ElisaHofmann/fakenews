@@ -14,6 +14,10 @@
 #############################################
 
 # Elisa's code for reading the database
+
+# import library
+import sqlite3
+
 # Read sqlite query results into a pandas DataFrame
 con = sqlite3.connect("nela-gt-2022_db/nela-gt-2022.db")
 db = pd.read_sql_query("SELECT * from newsdata", con)
