@@ -146,7 +146,7 @@ labels.info()
 #########################################################
 ## plot labels
 sns.countplot(x = "label", data = labels)
-plt.xticks(np.arange(3),["0: Reliable", "1: Mixed", "2: Unreliable"])
+plt.xticks(np.arange(3),["0: Reliable", "1: Unreliable", "2: Mixed"])
 plt.ylabel("Frequency")
 plt.xlabel("Outlet-level veracity labels")
 plt.title("Frequencies of the three outlet-level veracity labels ('labels' document)'")
@@ -169,7 +169,7 @@ labels_all.info(10)
 #########################################################
 ## plot labels
 sns.countplot(x = "label", data = labels_all)
-plt.xticks(np.arange(4),["-1: Unlabeled", "0: Reliable", "1: Mixed", "2: Unreliable"])
+plt.xticks(np.arange(4),["-1: Unlabeled", "0: Reliable", "1: Unreliable", "2: Mixed"])
 plt.ylabel("Frequency")
 plt.xlabel("Outlet-level veracity labels")
 plt.title("Frequencies of the four outlet-level veracity labels ('labels_all' document)'")
