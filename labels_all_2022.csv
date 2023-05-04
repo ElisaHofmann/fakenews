@@ -1,277 +1,4 @@
 source,country,label,bias,factuality,questionable-source,conspiracy-pseudoscience,pro-science
-alternet,USA,0,left,2.0,0,0,left
-cnn,USA,0,left,3.0,0,0,left
-crikey,Australia,0,left,4.0,0,0,left
-crooksandliars,USA,0,left,3.0,0,0,left
-dailybeast,USA,0,left,2.0,0,0,left
-dailykos,USA,0,left,2.0,0,0,left
-democracynow,USA,0,left,4.0,0,0,left
-ecowatch,USA,0,left,3.0,0,0,left
-jacobinmag,USA,0,left,4.0,0,0,left
-msnbc,USA,0,left,2.0,0,0,left
-newrepublic,USA,0,left,4.0,0,0,left
-newyorker,USA,0,left,4.0,0,0,left
-palmerreport,USA,0,left,2.0,0,0,left
-politicususa,USA,0,left,4.0,0,0,left
-rawstory,USA,0,left,4.0,0,0,left
-rightwingwatch,USA (44/180 Press Freedom),0,left,4.0,0,0,left
-shadowproof,USA (44/180 Press Freedom),0,left,4.0,0,0,left
-shareblue,USA,0,left,2.0,0,0,left
-slate,USA,0,left,3.0,0,0,left
-talkingpointsmemo,USA,0,left,3.0,0,0,left
-thenation,USA,0,left,4.0,0,0,left
-theroot,USA,0,left,3.0,0,0,left
-truthdig,USA,0,left,4.0,0,0,left
-truthout,USA,0,left,2.0,0,0,left
-truththeory,United Kingdom,0,left,4.0,0,0,left
-vox,USA,0,left,4.0,0,0,left
-abcnews,USA,0,leftcenter,4.0,0,0,leftcenter
-aljazeera,Qatar,0,leftcenter,2.0,0,0,leftcenter
-theatlantic,USA,0,leftcenter,4.0,0,0,leftcenter
-bbc,United Kingdom,0,leftcenter,4.0,0,0,leftcenter
-birminghammail,United Kingdom,0,leftcenter,3.0,0,0,leftcenter
-buzzfeed,USA,0,leftcenter,2.0,0,0,leftcenter
-cbsnews,USA,0,leftcenter,4.0,0,0,leftcenter
-charlotteobserver,USA,0,leftcenter,4.0,0,0,leftcenter
-chicagosun-times,USA,0,leftcenter,4.0,0,0,leftcenter
-cnbc,USA,0,leftcenter,3.0,0,0,leftcenter
-thedailymirror,United Kingdom,0,leftcenter,2.0,0,0,leftcenter
-fivethirtyeight,USA,0,leftcenter,4.0,0,0,leftcenter
-ipolitics,USA,0,leftcenter,4.0,0,0,leftcenter
-latimes,USA,0,leftcenter,4.0,0,0,leftcenter
-mcclatchydc,USA,0,leftcenter,4.0,0,0,leftcenter
-metrouk,United Kingdom,0,leftcenter,2.0,0,0,leftcenter
-motherjones,USA,0,leftcenter,4.0,0,0,leftcenter
-nationalobserver,Canada,0,leftcenter,4.0,0,0,leftcenter
-newyorkdailynews,USA,0,leftcenter,4.0,0,0,leftcenter
-thenewyorktimes,USA,0,leftcenter,4.0,0,0,leftcenter
-npr,USA,0,leftcenter,4.0,0,0,leftcenter
-pbs,USA,0,leftcenter,4.0,0,0,leftcenter
-politico,USA,0,leftcenter,4.0,0,0,leftcenter
-mercurynews,USA (44/180 Press Freedom),0,leftcenter,4.0,0,0,leftcenter
-spiegel,Germany (11/180 Press Freedom),0,leftcenter,4.0,0,0,leftcenter
-theguardian,United Kingdom,0,leftcenter,2.0,0,0,leftcenter
-theindependent,United Kingdom,0,leftcenter,2.0,0,0,leftcenter
-theintercept,USA,0,left,3.0,0,0,leftcenter
-theirishtimes,Ireland,0,leftcenter,4.0,0,0,leftcenter
-theverge,USA,0,leftcenter,4.0,0,0,leftcenter
-theweekuk,United Kingdom,0,leftcenter,4.0,0,0,leftcenter
-usatoday,USA,0,leftcenter,3.0,0,0,leftcenter
-usnews,USA,0,leftcenter,4.0,0,0,leftcenter
-washingtonmonthly,USA,0,leftcenter,4.0,0,0,leftcenter
-washingtonpost,USA,0,leftcenter,3.0,0,0,leftcenter
-yahoonews,USA,0,leftcenter,4.0,0,0,leftcenter
-airwars,United Kingdom,0,,4.0,0,0,center
-thedailyecho,United Kingdom,0,,4.0,0,0,center
-courthousenews,USA,0,,4.0,0,0,center
-foreignpolicy,USA,0,,4.0,0,0,center
-france24,France,0,,4.0,0,0,center
-politicalwire,USA,0,,4.0,0,0,center
-rferl,USA,0,,3.0,0,0,center
-reuters,United Kingdom,0,,5.0,0,0,center
-rollcall,USA (44/180 Press Freedom),0,,5.0,0,0,center
-skynewspolitics,United Kingdom,0,,4.0,0,0,center
-thehill,USA,0,,3.0,0,0,center
-thesmokinggun,USA,0,,4.0,0,0,center
-upi,USA,0,,4.0,0,0,center
-chicagotribune,USA,0,rightcenter,4.0,0,0,right-center
-drudgereport,USA,0,rightcenter,2.0,0,0,right-center
-endtimeheadlines,USA,0,rightcenter,3.0,0,0,right-center
-fortune,USA,0,rightcenter,4.0,0,0,right-center
-jerusalempost,Israel,0,rightcenter,3.0,0,0,right-center
-eveningstandard,United Kingdom,0,rightcenter,3.0,0,0,right-center
-nationalinterest,USA,0,rightcenter,4.0,0,0,right-center
-observer,USA,0,rightcenter,4.0,0,0,right-center
-newyorkpost,USA,0,rightcenter,2.0,0,0,right-center
-newsweek,USA,0,rightcenter,3.0,0,0,right-center
-realclearpolitics,USA,0,rightcenter,3.0,0,0,right-center
-theamericanconservative,USA,0,rightcenter,3.0,0,0,right-center
-thebulwark,USA,0,rightcenter,4.0,0,0,right-center
-thefiscaltimes,USA,0,rightcenter,4.0,0,0,right-center
-bearingarms,USA,0,right,2.0,0,0,right
-campusreform,USA,0,right,2.0,0,0,right
-conservativehome,United Kingdom,0,rightcenter,4.0,0,0,right
-thedailycaller,USA,0,right,2.0,0,0,right
-thedailyexpress,United Kingdom,0,right,2.0,0,0,right
-dailysignal,USA,0,right,3.0,0,0,right
-hotair,USA,0,right,3.0,0,0,right
-investorsbusinessdaily,USA,0,right,2.0,0,0,right
-lawenforcementtoday,USA,0,right,2.0,0,0,right
-nationalreview,USA (44/180 Press Freedom),0,right,3.0,0,0,right
-newsbusters,USA,0,right,2.0,0,0,right
-powerlineblog,USA,0,right,2.0,0,0,right
-redstate,USA,0,right,2.0,0,0,right
-thecollegefix,USA,0,right,2.0,0,0,right
-dailywire,USA,0,right,2.0,0,0,right
-thesun,United Kingdom,0,right,2.0,0,0,right
-freebeacon,USA,0,right,2.0,0,0,right
-21stcenturywire,USA,1,,2.0,0,1,conspiracy
-369news,Unknown,1,,2.0,0,1,conspiracy
-911truthorg,USA,1,,1.0,0,1,conspiracy
-acnlatitudes,USA,1,,2.0,0,1,conspiracy
-activistpost,Unknown,1,,1.0,0,1,conspiracy
-ageofautism,USA,1,,1.0,0,1,conspiracy
-allianceadvancedhealth,USA,1,,2.0,0,1,conspiracy
-alliancefornaturalhealthbiasjunkscience,USA,1,,2.0,0,1,conspiracy
-alternativemediatv,USA,1,,1.0,0,1,conspiracy
-althealthworks,USA,1,,1.0,0,1,conspiracy
-americanintelligencemedia,USA,1,,0.0,0,1,conspiracy
-ancientcode,Unknown,1,,2.0,0,1,conspiracy
-asiapacificresearch,Canada,1,,2.0,0,1,conspiracy
-australiannationalreview,Australia,1,,1.0,0,1,conspiracy
-awarenessact,USA,1,,1.0,0,1,conspiracy
-beholdisrael,Israel,1,,2.0,0,1,conspiracy
-brightside,Cyprus,1,,2.0,0,1,conspiracy
-climatedepot,USA,1,,2.0,0,1,conspiracy
-climateetc,USA,1,,2.0,0,1,conspiracy
-collectiveevolution,Canada,1,,1.0,0,1,conspiracy
-committeeconstructivetomorrowcfactorg,USA,1,,1.0,0,1,conspiracy
-consciouslifenews,USA,1,,2.0,0,1,conspiracy
-conspiracydailyupdate,USA,1,,0.0,0,1,conspiracy
-cosmicintelligenceagency,Australia,1,,1.0,0,1,conspiracy
-covertgeopolitics,USA (45/180 Press Freedom),1,,2.0,0,1,conspiracy
-curiousmindmagazine,USA,1,,1.0,0,1,conspiracy
-dailygrail,Australia,1,,2.0,0,1,conspiracy
-dailyhealthpost,Canada,1,,1.0,0,1,conspiracy
-davidicke,United Kingdom,1,,0.0,0,1,conspiracy
-davidwolfe,USA,1,,2.0,0,1,conspiracy
-discoveryinstitute,USA,1,,1.0,0,1,conspiracy
-draxe,USA,1,,1.0,0,1,conspiracy
-eluxemagazine,United Kingdom,1,,2.0,0,1,conspiracy
-environmentalworkinggroupewg,USA,1,,2.0,0,1,conspiracy
-escapeallthesethings,USA,1,,1.0,0,1,conspiracy
-faithpanda,Kenya,1,,2.0,0,1,conspiracy
-foreverconscious,USA,1,,1.0,0,1,conspiracy
-freethoughtproject,USA,1,,1.0,0,1,conspiracy
-geoengineeringwatch,USA,1,,1.0,0,1,conspiracy
-globalresearch,Canada,1,,1.0,0,1,conspiracy
-greenmedinfo,USA,1,,1.0,0,1,conspiracy
-greenpeace,Netherlands,1,,2.0,0,1,conspiracy
-healingoracle,Unknown,1,,0.0,0,1,conspiracy
-healthimpactnews,USA,1,,0.0,0,1,conspiracy
-healthsciencesinstitute,USA,1,,1.0,0,1,conspiracy
-healthyfoodhouse,Macedonia,1,,1.0,0,1,conspiracy
-healthyholisticliving,USA,1,,1.0,0,1,conspiracy
-savethemales,Canada,1,,1.0,0,1,conspiracy
-higherperspective,Unknown,1,,2.0,0,1,conspiracy
-humansarefree,USA,1,,1.0,0,1,conspiracy
-iheartintelligence,Bulgaria,1,,2.0,0,1,conspiracy
-illuminatiwatcher,USA,1,,1.0,0,1,conspiracy
-independentsciencenews,USA,1,,2.0,0,1,conspiracy
-infiniteunknown,Unknown,1,,0.0,0,1,conspiracy
-infowars,USA,1,,0.0,0,1,conspiracy
-investmentwatchblog,USA,1,,2.0,0,1,conspiracy
-iowaclimatescienceeducation,USA,1,,1.0,0,1,conspiracy
-jesusissavior,USA,1,,0.0,0,1,conspiracy
-larouchepac,USA,1,,1.0,0,1,conspiracy
-learntheriskorg,USA,1,,0.0,0,1,conspiracy
-lifespa,USA,1,,1.0,0,1,conspiracy
-liveaction,USA,1,,2.0,0,1,conspiracy
-livingwhole,Canada,1,,2.0,0,1,conspiracy
-mediaroots,USA,1,,2.0,0,1,conspiracy
-mercola,USA,1,,1.0,0,1,conspiracy
-modernalternativemama,USA,1,,2.0,0,1,conspiracy
-nationalfile,USA,1,,1.0,0,1,conspiracy
-naturalcures,United Kingdom,1,,2.0,0,1,conspiracy
-naturalhealth365,USA,1,,1.0,0,1,conspiracy
-naturalnews,USA,1,,0.0,0,1,conspiracy
-naturallysavvy,USA,1,,2.0,0,1,conspiracy
-needtoknow,USA,1,,1.0,0,1,conspiracy
-newsinsideoutcom,USA,1,,1.0,0,1,conspiracy
-notrickszone,Germany,1,,1.0,0,1,conspiracy
-nowtheendbegins,USA,1,,0.0,0,1,conspiracy
-nutritionfactsorg,USA,1,,2.0,0,1,conspiracy
-offguardian,Unknown,1,,2.0,0,1,conspiracy
-petapeoplefortheethicaltreatmentofanimals,USA,1,,2.0,0,1,conspiracy
-prepareforchange,Unknown,1,,1.0,0,1,conspiracy
-realclimatescience,USA,1,,1.0,0,1,conspiracy
-realjewnews,USA (45/180 Press Freedom),1,,0.0,0,1,conspiracy
-redoubtnews,USA (45/180 Press Freedom),1,,2.0,0,1,conspiracy
-renegadetribune,USA,1,,0.0,0,1,conspiracy
-returntonow,USA,1,,1.0,0,1,conspiracy
-sgtreport,Unknown,1,,1.0,0,1,conspiracy
-shoebat,USA,1,,1.0,0,1,conspiracy
-sottnet,USA,1,,1.0,0,1,conspiracy
-skeptiko,USA,1,,0.0,0,1,conspiracy
-southfront,Russia,1,,1.0,0,1,conspiracy
-stillnessinthestorm,USA,1,,1.0,0,1,conspiracy
-sustainablepulse,USA,1,,1.0,0,1,conspiracy
-thecorbettreport,Japan,1,,1.0,0,1,conspiracy
-theheartysoul,Canada,1,,2.0,0,1,conspiracy
-thelibertybeacon,USA,1,,1.0,0,1,conspiracy
-themindunleashed,USA,1,,1.0,0,1,conspiracy
-thestream,USA,1,,2.0,0,1,conspiracy
-thetruthaboutcancer,USA,1,,1.0,0,1,conspiracy
-thevaccinereaction,USA,1,,1.0,0,1,conspiracy
-thewakingtimes,USA,1,,1.0,0,1,conspiracy
-thoughtcatalog,USA,1,,2.0,0,1,conspiracy
-thoughtcrimeradio,USA,1,,0.0,0,1,conspiracy
-trunews,USA,1,,1.0,0,1,conspiracy
-ukcolumn,United Kingdom,1,,1.0,0,1,conspiracy
-usahitman,Unknown,1,,1.0,0,1,conspiracy
-vaxxter,USA,1,,1.0,0,1,conspiracy
-veteranstoday,USA,1,,0.0,0,1,conspiracy
-vigilantcitizen,USA,1,,1.0,0,1,conspiracy
-wattsupwiththat,USA,1,,1.0,0,1,conspiracy
-weareanonymous,Unknown,1,,0.0,0,1,conspiracy
-wearechange,USA,1,,2.0,0,1,conspiracy
-whatreallyhappened,USA (44/180 Press Freedom),1,,0.0,0,1,conspiracy
-x22report,USA,1,,1.0,0,1,conspiracy
-zerohedge,Bulgaria,1,,1.0,0,1,conspiracy
-bigleaguepolitics,USA,1,extremeright,1.0,1,0,questionable-source
-bipartisanreport,USA,1,extremeleft,1.0,1,0,questionable-source
-bonginoreport,USA,1,right,2.0,1,0,questionable-source
-breaking911,Unknown,1,,0.0,1,0,questionable-source
-breitbart,USA,1,extremeright,2.0,1,0,questionable-source
-trueactivist,Germany,1,extremeleft,1.0,1,0,questionable-source
-clashdaily,USA,1,extremeright,1.0,1,0,questionable-source
-dailybuzzlive,USA,1,,0.0,1,0,questionable-source
-dailymail,United Kingdom,1,right,1.0,1,0,questionable-source
-disclosetv,Germany,1,right,2.0,1,0,questionable-source
-djhj,USA,1,extremeright,1.0,1,0,questionable-source
-familysurvivalheadlines,USA,1,right,2.0,1,0,questionable-source
-foxnews,USA,1,right,2.0,1,0,questionable-source
-pamelagellerreport,USA,1,extremeright,1.0,1,0,questionable-source
-lewrockwell,USA,1,extremeright,1.0,1,0,questionable-source
-lifesitenews,Canada,1,right,1.0,1,0,questionable-source
-mintpressnews,USA,1,left,1.0,1,0,questionable-source
-newspunch,USA,1,extremeright,0.0,1,0,questionable-source
-newsmax,USA,1,right,1.0,1,0,questionable-source
-newswars,USA (44/180 Press Freedom),1,extremeright,1.0,1,0,questionable-source
-noqreport,USA,1,right,1.0,1,0,questionable-source
-trendingpolitics,USA,1,right,1.0,1,0,questionable-source
-occupydemocrats,USA,1,extremeleft,1.0,1,0,questionable-source
-pravadareport,Russia,1,right,0.0,1,0,questionable-source
-prntly,Unknown,1,extremeright,1.0,1,0,questionable-source
-rt,Russia,1,rightcenter,0.0,1,0,questionable-source
-russia-insider,Russia,1,extremeright,1.0,1,0,questionable-source
-tass,Russia,1,rightcenter,2.0,1,0,questionable-source
-shtfplan,USA (44/180 Press Freedom),1,extremeright,1.0,1,0,questionable-source
-sputnik,Russia,1,right,0.0,1,0,questionable-source
-summitnews,USA (45/180 Press Freedom),1,extremeright,1.0,1,0,questionable-source
-thebl,USA,1,right,2.0,1,0,questionable-source
-theblaze,USA,1,right,2.0,1,0,questionable-source
-thedcclothesline,USA,1,extremeright,1.0,1,0,questionable-source
-theduran,Cyprus,1,extremeright,1.0,1,0,questionable-source
-theepochtimes,USA,1,right,2.0,1,0,questionable-source
-thegatewaypundit,USA,1,extremeright,0.0,1,0,questionable-source
-thelibertydaily,USA,1,extremeright,2.0,1,0,questionable-source
-themillenniumreport,USA,1,extremeright,1.0,1,0,questionable-source
-remnantnewspaper,USA,1,extremeright,1.0,1,0,questionable-source
-therightscoop,Canada,1,right,2.0,1,0,questionable-source
-thetennesseestar,USA,1,right,2.0,1,0,questionable-source
-trendingpolitics,USA,1,right,1.0,1,0,questionable-source
-vdare,USA,1,extremeright,1.0,1,0,questionable-source
-warroom,USA,1,extremeright,0.0,1,0,questionable-source
-washingtontimes,USA,1,rightcenter,2.0,1,0,questionable-source
-welovetrump,USA,1,extremeright,0.0,1,0,questionable-source
-westernjournal,USA,1,right,2.0,1,0,questionable-source
-whatfinger,USA,1,extremeright,1.0,1,0,questionable-source
-wnd,USA,1,extremeright,1.0,1,0,questionable-source
-livescience,USA,0,,4.0,0,0,pro-science
-scienceblogs,USA,0,,4.0,0,0,pro-science
-scientificamerican,USA,0,,4.0,0,0,pro-science
-thescientist,USA,0,,5.0,0,0,pro-science
 21stcenturywire,USA,1,conspiracy-pseudoscience,2.0,0,1,0
 369news,Unknown,1,conspiracy-pseudoscience,2.0,0,1,0
 911truthorg,USA,1,conspiracy-pseudoscience,1.0,0,1,0
@@ -620,3 +347,47 @@ savethemales,Canada,1,conspiracy-pseudoscience,1.0,0,1,0
 therealnews,USA,0,left-bias,4.0,0,0,0
 trendingpolitics,USA,1,questionable-source,2.0,1,0,0
 vaccinesrevealed,USA,1,conspiracy-pseudoscience,0.0,0,1,0
+ecowatch,USA,0,left,3.0,0,0,0
+jacobinmag,USA,0,left,4.0,0,0,0
+truthdig,USA,0,left,4.0,0,0,0
+chicagosun-times,USA,0,left-center,4.0,0,0,0
+thedailymirror,United Kingdom,0,left-center,2.0,0,0,0
+latimes,USA,0,left-center,4.0,0,0,0
+thenewyorktimes,USA,0,left-center,4.0,0,0,0
+mercurynews,USA (44/180 Press Freedom),0,left-center,4.0,0,0,0
+spiegel,Germany (11/180 Press Freedom),0,left-center,4.0,0,0,0
+thedailyecho,United Kingdom,0,center,4.0,0,0,0
+courthousenews,USA,0,center,4.0,0,0,0
+rferl,USA,0,center,3.0,0,0,0
+skynewspolitics,United Kingdom,0,center,4.0,0,0,0
+drudgereport,USA,0,right-center,2.0,0,0,0
+fortune,USA,0,right-center,4.0,0,0,0
+jerusalempost,Israel,0,right-center,3.0,0,0,0
+eveningstandard,United Kingdom,0,right-center,3.0,0,0,0
+observer,USA,0,right-center,4.0,0,0,0
+thedailycaller,USA,0,right,2.0,0,0,0
+thedailyexpress,United Kingdom,0,right,2.0,0,0,0
+powerlineblog,USA,0,right,2.0,0,0,0
+dailywire,USA,0,right,2.0,0,0,0
+freebeacon,USA,0,right,2.0,0,0,0
+alliancefornaturalhealthbiasjunkscience,USA,1,conspiracy-pseudoscience,2.0,0,1,0
+alternativemediatv,USA,1,conspiracy-pseudoscience,1.0,0,1,0
+davidwolfe,USA,1,conspiracy-pseudoscience,2.0,0,1,0
+draxe,USA,1,conspiracy-pseudoscience,1.0,0,1,0
+higherperspective,Unknown,1,conspiracy-pseudoscience,2.0,0,1,0
+renegadetribune,USA,1,conspiracy-pseudoscience,0.0,0,1,0
+sottnet,USA,1,conspiracy-pseudoscience,1.0,0,1,0
+thewakingtimes,USA,1,conspiracy-pseudoscience,1.0,0,1,0
+whatreallyhappened,USA (44/180 Press Freedom),1,conspiracy-pseudoscience,0.0,0,1,0
+bonginoreport,USA,1,right,2.0,1,0,0
+disclosetv,Germany,1,right,2.0,1,0,0
+djhj,USA,1,extreme-right,1.0,1,0,0
+pamelagellerreport,USA,1,extreme-right,1.0,1,0,0
+pravadareport,Russia,1,right,0.0,1,0,0
+rt,Russia,1,right-center,0.0,1,0,0
+russia-insider,Russia,1,extreme-right,1.0,1,0,0
+sputnik,Russia,1,right,0.0,1,0,0
+remnantnewspaper,USA,1,extreme-right,1.0,1,0,0
+warroom,USA,1,extreme-right,0.0,1,0,0
+whatfinger,USA,1,extreme-right,1.0,1,0,0
+wnd,USA,1,extreme-right,1.0,1,0,0
