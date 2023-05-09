@@ -22,3 +22,5 @@ df["word_count"] = df["content"].apply(lambda x:len(x.split(" ")))
 #
 df_all = df.merge(right=labels, on="source" ,how="left")
 target = df_all["label"]
+
+sns.relplot(x="label", y="word_count", data=df_all);
