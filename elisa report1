@@ -22,20 +22,10 @@ import seaborn as sns
 # import sqlalchemy as 
 import sqlite3
 
-from sklearn import metrics
-from sklearn.metrics import confusion_matrix , classification_report
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.model_selection import train_test_split
-# from wordcloud import WordCloud
-import re
-from nltk.corpus import stopwords
-from nltk.stem.porter import PorterStemmer
-import nltk
 
 
 
-# 2 NELA DATABASE db - Dataset Analysis: "nela-gt-2022-db"
+# 2 Import nela-gt-2022 database as dataframe "db"
 ##############################################################################################
 ## Read sqlite query results into a pandas DataFrame
 con = sqlite3.connect("nela-gt-2022_db/nela-gt-2022.db")
@@ -50,59 +40,622 @@ print(db.describe())
 db.isnull().sum(axis = 0)
 
 
-#########################################################
-## get publishers / sources
-db["source"].unique()
 
-## get publishers / sources sorted alphabetically
-a = db["source"].unique()
-print(sorted(a))
 
-## check whether we have duplicates
-print(db.duplicated().sum())
 
-## plot publishers / sources
-fig = plt.figure(figsize = (10,40))
-sns.countplot(y = db.source, order = db["source"].value_counts().index)
-plt.xlabel("Frequency")
-plt.ylabel("Sources")
-plt.title("Number of articles per news source contained in the dataset")
+# 3 Create a stratified subset "strats" dataframe being representative for the sources 
+##############################################################################################
+
+# Check unique values and their counts for the column 'source'
+db['source'].value_counts()
+
+
+# Get ratio instead of raw numbers using normalize=True
+expected_ratio = db['source'].value_counts(normalize=True)
+
+# Round and then convert to percentage
+expected_ratio = expected_ratio.round(10)*100
+
+# convert to a DataFrame and store in variable 'source_ratio'
+# We'll use this variable to compare ratios for samples 
+# selected using SRS and Stratified Sampling 
+source_ratios = pd.DataFrame({'Expected':expected_ratio})
+source_ratios
+
+# Create stratified Sampling with around 102.000 entries (6% of database)
+
+# Use groupby and apply to select sample 
+# which maintains the population group ratios
+strats = db.groupby('source').apply(
+    lambda x: x.sample(frac=0.06)
+)
+
+
+
+# inspect strats dataframe
+strats.head()
+# weird index!
+
+# Remove the extra index added by groupby()
+### ONLY RUN ONCE OTHERWISE INDEX MIGHT BE DELETED
+# strats = strats.droplevel(0)
+
+
+# check whether it worked
+display(strats.head())
+
+
+# inspect the columns of the strats dataframe
+display(strats.info())
+# 106.710 rows
+
+# compare ratio of sources from db with strats
+
+# Ratio of selected items by the source
+stratified_ratio = strats['source'].value_counts(normalize=True)
+# Convert to percentage
+stratified_ratio = stratified_ratio.round(4)*100
+# We did stratified sampling. So give it proper name
+stratified_ratio.name = 'Stratified'
+
+
+# Add it to the variable source_ratios which already has 
+# the  expected and SRS proportions 
+source_ratios = pd.concat([source_ratios, stratified_ratio], axis=1)
+source_ratios
+
+# nice ratios --> are super similar
+
+
+## Analysis and pre-processing of "strats" dataframe
+
+strats['source'].value_counts()
+# 345 sources left potentially due to the super rare sources
+
+
+# check for missing values
+strats.isnull().sum(axis = 0)
+
+
+### Time data
+strats["date"]
+# date only no time
+
+## create new variables from column date
+strats["year"] = pd.to_datetime(strats["date"]).dt.year
+strats["month"] = pd.to_datetime(strats["date"]).dt.month
+strats["dayofyear"] = pd.to_datetime(strats["date"]).dt.dayofyear
+strats["dayofthemonth"] = pd.to_datetime(strats["date"]).dt.day
+strats["weekday"] = pd.to_datetime(strats["date"]).dt.weekday
+strats["weekend"] = np.where(strats["weekday"].isin([5,6]), 1, 0)
+
+
+# check new columns
+strats.info()
+
+# check new columns
+strats.head()
+
+
+
+
+
+# 4 Analyse and preprocess "labels_all_2022" document
+##############################################################################################
+
+# import document as dataframe
+labels_all_2022 = pd.read_csv("labels_all_2022.csv")
+
+
+# inspect dataframe
+labels_all_2022.info()
+
+# inspect dataframe
+labels_all_2022.head(10)
+
+
+
+## Analyse and preprocess labels
+
+## calculate frequencies of labels
+labels_all_2022["label"].value_counts()
+
+
+# plot labels
+sns.countplot(x = "label", data = labels_all_2022)
+plt.xticks(np.arange(4),["-1: Unlabeled", "0: Reliable", "1: Unreliable", "2: Mixed"])
+plt.ylabel("Frequency")
+plt.xlabel("Outlet-level veracity labels")
+plt.title("Frequencies of the four outlet-level veracity labels ('labels_all_2022' document)'")
 plt.show();
 
-#### idea for improvement: create bins (1.g. sources with 100 articles, 100-200 etc. and then plot)
+
+### DELETE -1 in labels (delete 4 sources)
+labels_all_2022 = labels_all_2022[labels_all_2022["label"] != -1]
 
 
-#########################################################
-## Analysis of time data
-# create new variables
-db["year"] = pd.to_datetime(db["date"]).dt.year
-db["month"] = pd.to_datetime(db["date"]).dt.month
-db["day"] = pd.to_datetime(db["date"]).dt.dayofyear
-db["weekday"] = pd.to_datetime(db["date"]).dt.weekday
-db["time"] = pd.to_datetime(db["date"]).dt.time
+## calculate frequencies of labels
+labels_all_2022["label"].value_counts()
 
-db.info()
-db.head(5)
 
-## A) plot the number of articles per month
+
+
+## Analyse and preprocess countries
+
+
+# get nunique of country
+labels_all_2022["country"].nunique()
+
+# get nunique of country
+labels_all_2022["country"].unique()
+
+# get countries
+labels_all_2022["country"].value_counts()
+
+# harmonize countries
+labels_all_2022['country'].replace({'USA (44/180 Press Freedom)': 'USA', 'Germany (11/180 Press Freedom)': 'Germany', 'UnitedKingdwom': 'UnitedKingdom'}, inplace=True)
+
+# check whether it worked
+labels_all_2022["country"].value_counts()
+
+# missing values?
+print(labels_all_2022[labels_all_2022["country"].isna()])
+print("\n")
+
+print(labels_all_2022["country"].isnull().sum(axis = 0))
+# missing country for 57 sources
+
+### DELETE NaN in country (delete 57 sources)
+labels_all_2022 = labels_all_2022.dropna(subset=['country'], how = "any")
+
+labels_all_2022.info()
+# original: 392 rows
+# now 331 rows
+# thus: 61 sources deleted
+
+# check for missing values in country
+print(labels_all_2022[labels_all_2022["country"].isna()])
+
+
+
+
+## Analyse and preprocess factuality values
+
+
+# get factuality values
+labels_all_2022.factuality.value_counts()
+
+# missing values?
+print(labels_all_2022["factuality"].isnull().sum(axis = 0))
+# missing factuality for 1 source
+
+### DELETE NaN in factuality (delete 1 source)
+labels_all_2022 = labels_all_2022.dropna(subset=['factuality'], how = "any")
+
+labels_all_2022.info()
+# correct - should be 330 rows
+
+
+
+## Analyse and preprocess bias values
+
+
+sns.countplot(y = "bias", data = labels_all_2022, order = labels_all_2022["bias"].value_counts().index);
+## looks like we have to split this variable
+
+
+# missing values?
+print(labels_all_2022["bias"].isnull().sum(axis = 0))
+# missing factuality for 0 source
+# no need to delete any row
+
+labels_all_2022.isna().sum(axis = 0)
+
+
+
+
+5 MERGE stratified subset "strats" with "labels_all_2022": create final dataframe "strats_all"
+##############################################################################################
+
+# do the merging
+strats_all = strats.merge(right=labels_all_2022, on="source", how="left")
+target = strats_all["label"]
+
+# inspect the dataframe
+strats_all.info()
+
+# inspect the dataframe
+strats_all.head(5)
+
+
+
+## Preprocessing of "strats_all" dataframe
+
+
+# check for missing values
+strats_all.isnull().sum(axis = 0)
+# NaN - probably articles in db without labels in labels_all_2022
+
+# missing values?
+print(strats_all[strats_all["country"].isna()])
+print("\n")
+
+print(strats_all["country"].isnull().sum(axis = 0))
+# missing country for 21659 rows
+
+### DELETE NaN in country (delete 21659 rows)
+strats_all = strats_all.dropna(subset=['country'], how = "any")
+
+strats_all.info()
+# strats_all:    106710 
+# new: 85051
+# deleted: 21659 rows
+
+# check for missing values again
+strats_all.isnull().sum(axis = 0)
+
+
+# count sources
+strats_all.source.nunique()
+# 238 unique sources
+
+# count countries
+strats_all.country.nunique()
+# 17 unique sources
+
+strats_all["country"].value_counts()
+
+
+# missing values?
+print(strats_all[strats_all["label"].isna()])
+print("\n")
+
+print(strats_all["label"].isnull().sum(axis = 0))
+
+
+
+### Create new bias dataframe left/right only
+
+# get factuality values
+strats_all.bias.value_counts()
+
+# we want to seperate the left/right ones (6 categories) from the conspiracy-pseudoscience ones (3 categories)
+
+# harmonize bias
+# strats_all['bias'].replace({'left-bias': 'left'}, inplace=True)
+
+bias_new = strats_all[(strats_all['bias'] == "left") | (strats_all['bias'] == 'left-center') | (strats_all['bias'] == 'center') | (strats_all['bias'] == 'right-center') | (strats_all['bias'] == 'right') | (strats_all['bias'] == 'extreme-right')]
+bias_new
+
+bias_new["bias"].value_counts()
+
+sns.countplot(y = "bias", data = bias_new, order = bias_new["bias"].value_counts().index);
+
+# make bias numeric
+# left: 1
+# left-center: 2
+# center: 3
+# right-center: 4
+# right: 5
+# extreme-right: 6
+
+bias_new["bias_num"] = bias_new["bias"].replace({"left" : 1, "left-center": 2, "center" : 3, "right-center" : 4, "right" : 5, "extreme-right" : 6})
+
+
+bias_new["bias_num"].value_counts()
+
+sns.countplot(y = "bias_num", data = bias_new, order = bias_new["bias_num"].value_counts().index);
+
+
+
+### Create new bias dataframe pseudoscience etc. only
+
+strats_all["bias"].value_counts()
+
+bias_new_names = strats_all[(strats_all['bias'] == "questionable-source") | (strats_all['bias'] == 'conspiracy-pseudoscience') | (strats_all['bias'] == 'pro-science')]
+bias_new_names
+
+bias_new_names["bias"].value_counts()
+
+sns.countplot(y = "bias", data = bias_new_names, order = bias_new_names["bias"].value_counts().index);
+
+# make bias_names numeric
+# questionable-source: 1
+# conspiracy-pseudoscience: 2
+# pro-science: 3
+
+
+bias_new_names["bias_num"] = bias_new_names["bias"].replace({"questionable-source" : 1, "conspiracy-pseudoscience": 2, "pro-science" : 3})
+
+
+bias_new_names["bias_num"].value_counts()
+
+sns.countplot(y = "bias_num", data = bias_new_names, order = bias_new_names["bias_num"].value_counts().index);
+
+# plot bias names and labels
+sns.countplot(x="bias", hue="label", data=bias_new_names)
+plt.xticks(np.arange(6),["left", "left-center", "center", "right-center", "right", "extreme-right"])
+plt.ylabel("Number of articles")
+plt.xlabel("Bias label")
+plt.title("Number of reliable, unreliable and mixed articles per bias categories in bias_new dataset")
+plt.show();
+
+
+
+
+
+
+
+
+
+### Analyse relationship between bias and factuality
+
+
+sns.countplot(x = "bias_num", hue = "factuality", data = bias_new)
+plt.xticks(np.arange(6),["left", "left-center", "center", "right-center", "right", "extreme-right"])
+plt.ylabel("Number of articles")
+plt.xlabel("Bias of the source")
+plt.title("Number of articles split by bias and factuality in bias_new dataset")
+plt.show();
+
+
+fig = plt.figure(figsize = (10,5))
+sns.countplot(x = "bias_num", hue = "factuality", data = bias_new_names)
+plt.xticks(np.arange(3),["questionable-source: 1", "conspiracy-pseudoscience: 2", "pro-science: 3"])
+plt.ylabel("Number of articles")
+plt.xlabel("Bias of the source")
+plt.title("Number of articles split by bias and factuality in bias_new_names dataset")
+plt.show();
+
+# plot bias name and factuality
+sns.countplot(x = "bias", hue = "factuality", data = bias_new_names)
+plt.ylabel("Number of articles")
+plt.xlabel("Bias vategory of the source")
+plt.title("Number of articles split by bias category and factuality in bias_new_names dataset")
+plt.show();
+
+
+
+
+
+### Analyse relationship between bias / factuality and country
+
+
+# scatterplot country and bias
+sns.scatterplot(data=bias_new, x="bias", y="country");
+# plt.xticks(np.arange(9),["1: left", " ", "2: left-center", " ", "3: center", " ", "4: right-center", " ", "5: right"]);
+# 
+plt.show();
+
+# countplot country and bias
+sns.countplot(data=bias_new, y="country", hue="bias");
+
+
+# scatterplot country and bias
+sns.scatterplot(data=bias_new_names, x="bias", y="country");
+plt.ylabel("Country")
+plt.xlabel("3 bias categories")
+plt.title("Observations per bias category split by country in bias_new_names dataset")
+plt.show();
+
+# countplot country and bias
+sns.countplot(data=bias_new_names, y="country", hue="bias");
+
+
+
+
+
+
+# scatterplot country and factuality
+sns.scatterplot(data=bias_new, x="factuality", y="country")
+plt.xticks(np.arange(6),["0: Very Low", "1: Low", "2: Mixed", "3: Mostly Factual", "4: High", "5: Very High"])
+plt.ylabel("Country")
+plt.xlabel("Factuality score")
+plt.title("Observations per factuality score split by country in strats_all dataset")
+plt.show();
+
+
+# countplot country and factuality
+sns.countplot(data=bias_new, y="country", hue="factuality");
+
+
+
+
+
+
+
+
+## Analysis of "strats_all" dataset
+
+
+### Top/Flop Days
+
+# plot top 20 days
+sns.countplot(y = strats["date"], order = strats["date"].value_counts().head(20).index);
+
+
+# plot flop 20 days
+sns.countplot(y = strats["date"], order = strats["date"].value_counts().tail(20).index);
+
+
+
+
+### Word Counts strats_all
+
+#word count content
+strats_all["word_count_content"] = strats_all["content"].apply(lambda x:len(x.split(" ")))
+
+
 # get values
-# db["month"].value_counts()
+strats_all["word_count_content"].value_counts()
 
+sns.displot(x = strats_all.word_count_content);
+# alternative: sns.displot(x = strats_all.word_count_content);
+
+## another plot
+sns.relplot(x="label", y="word_count_content", data=strats_all)
+plt.ylabel("Number of words in content")
+plt.xlabel("Label of the source")
+plt.title("Length of articles by label in strats_all dataset")
+plt.xticks(np.arange(3),["reliable", "unreliable", "mixed"])
+plt.show();
+
+# plot 10 longest articles and labels
+sns.countplot(x="word_count_content", hue="label", order = strats_all["word_count_content"].value_counts().head(10).index, 
+data=strats_all)
+plt.show;
+
+
+
+
+#word count title
+strats_all["word_count_title"] = strats_all["title"].apply(lambda x:len(x.split(" ")))
+
+# plot word count title
+# get values
+strats_all["word_count_title"].value_counts()
+
+sns.displot(x = strats_all.word_count_title);
+
+
+## another plot
+sns.relplot(x="label", y="word_count_title", data=strats_all)
+plt.ylabel("Number of words in title")
+plt.xlabel("Label of the source")
+plt.title("Length of titles split by label in strats_all dataset")
+plt.xticks(np.arange(3),["reliable", "unreliable", "mixed"])
+plt.show();
+
+# plot 
+fig = plt.figure(figsize = (15,5))
+sns.countplot(x = strats_all.word_count_title)
+plt.ylabel("Frequency")
+plt.xlabel("Number of words in title")
+plt.title("Length of titles in strats_all dataset")
+# plt.xticks(np.arange(3),["reliable", "unreliable", "mixed"])
+plt.show();
+
+
+# labels and word count titles
+fig = plt.figure(figsize = (15,8))
+sns.countplot(x="word_count_title", hue="label", data=strats_all)
+plt.show;
+
+# 10 longest titles and labels
+sns.countplot(x="word_count_title", hue="label", order = strats_all["word_count_title"].value_counts().head(10).index, 
+data=strats_all)
+plt.ylabel("Frequency")
+plt.xlabel("Number of words in title")
+plt.title("Length of titles split by label in strats_all dataset")
+plt.legend()
+plt.show;
+
+
+
+
+## Additional Analyses (not reported in report 1)
+
+
+# labels per month
+
+# plot number of sources per reliability class
+strats_all.groupby(["label", "month"]).count()
+
+# displays all columns sorted
+
+# plot it
+sns.countplot(x="month", hue="label", data=strats_all)
+plt.show;
+# similar distributions
+
+# labels per day of the month
+
+plt.figure(figsize=(10,20))
+sns.countplot(y="dayofthemonth", hue="label", data=strats_all)
+plt.ylabel("Number of articles")
+plt.xlabel("Day of the month")
+plt.title("Number of reliable, unreliable and mixed articles per day of the month in strats_all dataset")
+plt.show();
+
+
+
+# count labels per source
+strats_all.groupby("label")["source"].value_counts()
+
+
+# top 20 sources plotted by label
+sns.countplot(y = strats_all["source"], hue = strats_all["label"], order = strats_all["source"].value_counts().head(20).index);
+
+
+
+
+
+
+# get labels per country
+labels_all_2022.groupby(["label", "country"]).count()
+
+# countries plotted by label
+plt.figure(figsize=(20,10))
+sns.countplot(x = strats_all["country"], hue = strats_all["label"])
+plt.yticks()
+plt.xlabel("Country")
+plt.xlabel("Number of articles")
+plt.title("Number of articles per Country split by label in strats_all dataset");
+
+
+
+
+6 PLOTS FOR REPORT 1
+##############################################################################################
+
+
+# GRAPH 1
+
+# plot in one graph
+plt.figure(figsize = (10,5))
+
+# First Plot:
+plt.subplot(1,2,1)
+sns.countplot(y = strats_all["source"], order = strats_all["source"].value_counts().head(20).index)
+plt.xlabel("Number of Articles")
+plt.ylabel("Source")
+plt.title("Number of articles of top 10 sources contained in the strats_all dataset (85051 rows, 238 sources overall)")
+plt.show();
+
+
+# Second Plot:
+plt.subplot(1,2,2)
+sns.countplot(y = strats_all["source"], order = strats_all["source"].value_counts().tail(20).index)
+plt.xlabel("Number of Articles")
+plt.ylabel("Source")
+plt.title("Number of articles of flop 10 sources contained in the strats_all dataset (85051 rows, 238 sources overall)")
+plt.show();
+
+
+
+
+## GRAPH 2 IN REPORT 1
+
+## plot the number of articles per month
 plt.figure(figsize=(15,5))
-sns.countplot(x=db.month, color="limegreen");
+sns.countplot(x=strats_all.month, color="limegreen");
 plt.xticks(np.arange(12),["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]);
 plt.ylabel("Number of articles")
 plt.xlabel("Months")
-plt.title("Number of articles per month in dataset");
+plt.title("Number of articles per month in strats_all dataset");
 
 
-## B) plot the number of articles per day
-# lineplot articles per day whole year
-db["date"].value_counts()
 
-# sort the values and create a new variable
-lineplot_data = db["date"].value_counts().sort_index()
 
+## GRAPH 3 IN REPORT 1
+
+## lineplot articles per day whole year
+strats_all["date"].value_counts()
+
+## sort the values and create a new variable
+lineplot_data = strats_all["date"].value_counts().sort_index()
+
+## plot
 fig = plt.figure(figsize = (10, 8))
 ax1 = fig.add_subplot(111)
 ax1.plot_date(lineplot_data.index, lineplot_data, linestyle='-')
@@ -114,97 +667,261 @@ month_names = ['Jan','Feb','Mar','Apr','May','Jun',
 plt.gca().set_xticks(month_starts)
 plt.gca().set_xticklabels(month_names)
 
+plt.ylabel("Number of articles")
+plt.xlabel("Months")
+plt.title("Number of articles per day of the year 2022 in strats_all dataset")
+
 plt.show();
 
-# ToDo: figure out what the two low dots are
 
 
-## C) plot the number of articles per weekday
-# get values
-# db["weekday"].value_counts()
 
+## GRAPH 4 IN REPORT 1
+
+# barplot number of articles per day of the week
 fig = plt.figure(figsize = (9, 6))
-sns.countplot (x = db["weekday"], color = "lightblue")               
+sns.countplot (x = strats_all["weekday"], color = "lightblue")               
 plt.xticks(np.arange(7),["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"])
-plt.ylabel("Frequency")
-plt.xlabel("Weekdays")
+plt.ylabel("Number of Articles")
+plt.xlabel("Days of the Week")
+plt.title("Number of articles per day of the week in strats_all dataset")
 plt.show();
 
 
 
 
-# 3 NELA "labels.tab" document - Dataset Analysis: "label.tab"
-##############################################################################################
-
-# labels = pd.read_csv("labels.csv", index_col=0)
-labels = pd.read_csv("labels.csv")
-
-labels.head(10)
-labels.info()
 
 
-#########################################################
-## plot labels
-sns.countplot(x = "label", data = labels)
+### GRAPH 5 IN REPORT 1
+
+# word count content and label
+sns.relplot(x="label", y="word_count_content", data=strats_all)
+plt.ylabel("Number of words in content")
+plt.xlabel("Label of the source")
+plt.title("Length of articles by label in strats_all dataset")
+plt.xticks(np.arange(3),["reliable", "unreliable", "mixed"])
+plt.show();
+
+
+
+
+### GRAPH 6 IN REPORT 1
+
+# word count title and label
+sns.relplot(x="label", y="word_count_title", data=strats_all)
+plt.ylabel("Number of words in title")
+plt.xlabel("Label of the source")
+plt.title("Length of titles by label in strats_all dataset")
+plt.xticks(np.arange(3),["reliable", "unreliable", "mixed"])
+plt.show();
+
+
+
+
+### GRAPH 7 IN REPORT 1
+
+# barplot of labels
+sns.countplot(x = "label", data = strats_all)
 plt.xticks(np.arange(3),["0: Reliable", "1: Unreliable", "2: Mixed"])
 plt.ylabel("Frequency")
 plt.xlabel("Outlet-level veracity labels")
-plt.title("Frequencies of the three outlet-level veracity labels ('labels' document)'")
+plt.title("Frequencies of the three outlet-level veracity labels in 'strats_all' dataset")
 plt.show();
 
 
 
 
+# USED AS GRAPH 8 IN REPORT 1
 
-# 4 NELA "labels_all.tab" document - Dataset Analysis: "labels_all.tab"
-##############################################################################################
-
-# labels = pd.read_csv("labels.csv", index_col=0)
-labels_all = pd.read_csv("labels_all.csv")
-
-labels_all.head(10)
-labels_all.info(10)
-
-
-#########################################################
-## plot labels
-sns.countplot(x = "label", data = labels_all)
-plt.xticks(np.arange(4),["-1: Unlabeled", "0: Reliable", "1: Unreliable", "2: Mixed"])
-plt.ylabel("Frequency")
-plt.xlabel("Outlet-level veracity labels")
-plt.title("Frequencies of the four outlet-level veracity labels ('labels_all' document)'")
-plt.show();
-
-
-
-#########################################################
-## plot countries
-sns.countplot(y = "country", data = labels_all, order = labels_all["country"].value_counts().index);
-plt.ylabel("Country")
-plt.xlabel("Frequency")
-plt.title("Frequencies of countries ('labels_all' document)")
-plt.show();
-
-
-
-
-#########################################################
-## plot factuality values
-
-# create new variable factuality as integer
-labels_all["fact_num"] = labels_all["factuality"].astype("int")
-
-# count sorted
-labels_all.fact_num.value_counts.sort_values()
-
-# plot
+# barplot of factuality values
 fig = plt.figure(figsize=(10,5))
-sns.countplot(x = "factuality", data = labels_all) 
+sns.countplot(x = "factuality", data = strats_all) 
 plt.xticks(np.arange(6),["0: Very Low", "1: Low", "2: Mixed", "3: Mostly Factual", "4: High", "5: Very High"])
 plt.ylabel("Frequency")
 plt.xlabel("Outlet-level factuality labels")
-plt.title("Frequencies of six outlet-level factuality labels ('labels_all' document)")
+plt.title("Frequencies of six outlet-level factuality labels strats_all dataset")
 plt.show();
 
-## alternative plot
-sns.displot (labels_all["factuality"], kde=True, bins=6);
+
+
+
+# USED AS GRAPH 9 IN REPORT 1
+
+# plot countries
+sns.countplot(y = "country", data = strats_all, order = strats_all["country"].value_counts().index)
+plt.ylabel("Country")
+plt.xlabel("Frequency")
+plt.title("Frequency of Country in strats_all dataset")
+plt.show();
+
+
+
+
+# USED AS GRAPH 10 IN THE REPORT
+
+# plot labels per weekday
+sns.countplot(x="weekday", hue="label", data=strats_all)
+plt.xticks(np.arange(7),["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"])
+plt.ylabel("Number of articles")
+plt.xlabel("Day of the week")
+plt.title("Number of reliable, unreliable and mixed articles per day of the week in strats_all dataset")
+plt.show();
+
+
+
+
+# USED AS GRAPH 10a IN THE REPORT
+
+# plot bias and labels
+sns.countplot(x="bias", hue="label", data=bias_new)
+plt.xticks(np.arange(6),["left", "left-center", "center", "right-center", "right", "extreme-right"])
+plt.ylabel("Number of articles")
+plt.xlabel("Bias label")
+plt.title("Number of reliable, unreliable and mixed articles per bias label in bias_new dataset")
+plt.show();
+
+
+
+
+# USED AS GRAPH 11 IN THE REPORT
+
+# plot bias and factuality
+sns.countplot(x = "bias_num", hue = "factuality", data = bias_new)
+plt.xticks(np.arange(6),["left", "left-center", "center", "right-center", "right", "extreme-right"])
+plt.ylabel("Number of articles")
+plt.xlabel("Bias of the source")
+plt.title("Number of articles split by bias and factuality in strats_all dataset")
+plt.show();
+
+
+
+
+# USED AS GRAPH 12 IN THE REPORT
+
+# scatterplot factuality and country
+sns.scatterplot(data=bias_new, x="factuality", y="country")
+plt.xticks(np.arange(6),["0: Very Low", "1: Low", "2: Mixed", "3: Mostly Factual", "4: High", "5: Very High"])
+plt.ylabel("Country")
+plt.xlabel("Factuality score")
+plt.title("Observations per factuality score split by country in strats_all dataset")
+plt.show();
+
+
+
+
+# USED AS GRAPH 13
+
+# countries plotted by label
+plt.figure(figsize=(20,10))
+sns.countplot(x = strats_all["country"], hue = strats_all["label"])
+plt.yticks()
+plt.xlabel("Country")
+plt.xlabel("Number of articles")
+plt.title("Number of articles per Country split by label in strats_all dataset")
+plt.show();
+
+
+7 First Statistics
+##############################################################################################
+
+
+
+# Correlations
+
+strats_all.info()
+
+corr = strats_all.corr()
+
+f, ax = plt.subplots(figsize=(11, 9))
+
+# Generate a custom diverging colormap
+cmap = sns.diverging_palette(230, 20, as_cmap=True)
+
+# Draw the heatmap with the mask and correct aspect ratio
+sns.heatmap(corr, cmap=cmap, vmax=.3, center=0,
+            square=True, linewidths=.5, cbar_kws={"shrink": .5});
+
+
+
+
+
+
+
+# Statistical Analyses (not exhaustive - just started)
+
+# Correlation month and label
+X = strats_all["month"]
+Y = strats_all["label"]
+np.corrcoef(X, Y)
+
+pearsonr(x = strats_all["month"], y = strats_all["label"]) 
+print("p-value: ", pearsonr(x = strats_all["month"], y = strats_all["label"])[1])
+print("coefficient: ", pearsonr(x = strats_all["month"], y = strats_all["label"])[0])
+
+
+
+# Correlation month and bias_num
+X = bias_new["month"]
+Y = bias_new["bias_num"]
+np.corrcoef(X, Y)
+
+pearsonr(x = bias_new["month"], y = bias_new["bias_num"]) 
+print("p-value: ", pearsonr(x = bias_new["month"], y = bias_new["bias_num"])[1])
+print("coefficient: ", pearsonr(x = bias_new["month"], y = bias_new["bias_num"])[0])
+
+
+
+# Correlation month and factuality
+X = strats_all["month"]
+Y = strats_all["factuality"]
+np.corrcoef(X, Y)
+
+pearsonr(x = strats_all["month"], y = strats_all["factuality"]) 
+print("p-value: ", pearsonr(x = strats_all["month"], y = strats_all["factuality"])[1])
+print("coefficient: ", pearsonr(x = strats_all["month"], y = strats_all["factuality"])[0])
+
+
+
+# Correlation weekday and label
+X = strats_all["weekday"]
+Y = strats_all["label"]
+np.corrcoef(X, Y)
+
+from scipy.stats import pearsonr
+pearsonr(x = strats_all["weekday"], y = strats_all["label"]) 
+print("p-value: ", pearsonr(x = strats_all["weekday"], y = strats_all["label"])[1])
+print("coefficient: ", pearsonr(x = strats_all["weekday"], y = strats_all["label"])[0])
+
+
+
+
+# Correlation weekday and factuality
+X = strats_all["weekday"]
+Y = strats_all["factuality"]
+np.corrcoef(X, Y)
+
+pearsonr(x = strats_all["weekday"], y = strats_all["factuality"]) 
+print("p-value: ", pearsonr(x = strats_all["weekday"], y = strats_all["factuality"])[1])
+print("coefficient: ", pearsonr(x = strats_all["weekday"], y = strats_all["factuality"])[0])
+
+
+
+# Correlation article length content and label
+X = strats_all["word_count_content"]
+Y = strats_all["label"]
+np.corrcoef(X, Y)
+
+pearsonr(x = strats_all["word_count_content"], y = strats_all["label"]) 
+print("p-value: ", pearsonr(x = strats_all["word_count_content"], y = strats_all["label"])[1])
+print("coefficient: ", pearsonr(x = strats_all["word_count_content"], y = strats_all["label"])[0])
+
+
+
+# Correlation article length title and label
+X = strats_all["word_count_title"]
+Y = strats_all["label"]
+np.corrcoef(X, Y)
+
+pearsonr(x = strats_all["word_count_title"], y = strats_all["label"]) 
+print("p-value: ", pearsonr(x = strats_all["word_count_title"], y = strats_all["label"])[1])
+print("coefficient: ", pearsonr(x = strats_all["word_count_title"], y = strats_all["label"])[0])
