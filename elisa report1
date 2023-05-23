@@ -67,7 +67,7 @@ source_ratios
 # Use groupby and apply to select sample 
 # which maintains the population group ratios
 strats = db.groupby('source').apply(
-    lambda x: x.sample(frac=0.06)
+    lambda x: x.sample(frac=0.06, random_state=123)
 )
 
 
