@@ -1,5 +1,5 @@
 # Fake News Detection Project
-https://pixabay.com/de/videos/gef%C3%A4lschte-nachrichten-43025/
+https://github.com/ElisaHofmann/fakenews/assets/57946692/2d3c2e69-60ec-4380-b355-0b2dcc59a464
 Source: Christian Bodhi / Pixabay
 
 ## Description
