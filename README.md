@@ -1,5 +1,9 @@
 # Fake News Detection Project
-![fakenews](https://github.com/ElisaHofmann/fakenews/assets/57946692/2d3c2e69-60ec-4380-b355-0b2dcc59a464)
+
+
+https://github.com/ElisaHofmann/fakenews/assets/57946692/0172ba96-ecfa-4f0f-9d17-4f134239bbcf
+
+
 Source: Christian Bodhi / Pixabay
 
 ## Description
