@@ -1,6 +1,6 @@
 # Fake News Detection Project
 
-
+![Fake News]
 https://github.com/ElisaHofmann/fakenews/assets/57946692/0172ba96-ecfa-4f0f-9d17-4f134239bbcf
 
 
