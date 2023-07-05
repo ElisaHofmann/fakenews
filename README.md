@@ -7,9 +7,14 @@ Video Source: Christian Bodhi / Pixabay
 ## Description
 This repository contains information and code on the project "Fake News Detection", developed during our Data Scientist training at DataScientest.
 
-The goal of this project is to utilize machine learning techniques to predict whether an article is real or fake news.
+In this project we aim to predict fake news and real news from the title and content of an article. Thus, we have a classification problem that we tackle with data science techniques.
 
-We use the fifth installment of the nela-gt dataset (nela-gt-2022). The dataset labels_all_2022.csv is stored in this repository. The used stratified subset of the data is available upon request.
+We use a subset of the fifth installment of the nela-gt datasets, containing 2 datasets:
+    
+    1. nela-gt-22.db (SQLite 3 database containing the collected articles)
+    2. labels_all_2022.csv (document with label and additional information on the sources)
+
+The nela-gt datasets have been created with scientific rigor and are freely available. The dataset labels_all_2022.csv is stored in this repository. The used stratified subset of the data is available upon request.
 
 This project was developed by the following team: Dr. Elisa Hofmann, Amer Osmanovic, Ronny Storch
 
