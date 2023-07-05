@@ -1,6 +1,6 @@
 # Fake News Detection Project
 
-[https://github.com/ElisaHofmann/fakenews/assets/57946692/0172ba96-ecfa-4f0f-9d17-4f134239bbcf](https://images.pexels.com/photos/3989901/pexels-photo-3989901.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)
+https://images.pexels.com/photos/3989901/pexels-photo-3989901.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1
 
 Source: Joshua Miranda / Pexels
 
