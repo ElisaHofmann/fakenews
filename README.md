@@ -11,10 +11,7 @@ The goal of this project is to utilize machine learning techniques to predict wh
 
 We use the fifth installment of the nela-gt dataset (nela-gt-2022). The dataset labels_all_2022.csv is stored in this repository. The used stratified subset of the data is available upon request.
 
-This project was developed by the following team:
-Dr. Elisa Hofmann
-Amer Osmanovic
-Ronny Storch
+This project was developed by the following team: Dr. Elisa Hofmann, Amer Osmanovic, Ronny Storch
 
 Mentor: Sarah Le Net
 
