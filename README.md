@@ -1,8 +1,8 @@
 # Fake News Detection Project
 
-https://github.com/ElisaHofmann/fakenews/assets/57946692/0172ba96-ecfa-4f0f-9d17-4f134239bbcf
+[https://github.com/ElisaHofmann/fakenews/assets/57946692/0172ba96-ecfa-4f0f-9d17-4f134239bbcf](https://images.pexels.com/photos/3989901/pexels-photo-3989901.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)
 
-Video Source: Christian Bodhi / Pixabay
+Source: Joshua Miranda / Pexels
 
 ## Description
 This repository contains information and code on the project "Fake News Detection", developed during our Data Scientist training at DataScientest.
